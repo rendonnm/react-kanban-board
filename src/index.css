@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Sora';
+  src: url('/Sora.ttf') format('truetype');
+}
+
+* {
+  font-family: 'Sora', sans-serif;
+}
