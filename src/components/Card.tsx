@@ -1,19 +1,25 @@
 import type { ReactNode } from "react";
 import { CalendarIcon, CommentIcon, TaskIcon, LinkIcon } from "./Icons";
 import type { Task } from "../types/task";
+import { intl } from "../format/intl";
+import { TASK_STATUS } from "../constants/tasks";
 
 interface CardProps {
   title: Task["title"];
   description: Task["description"];
+  status: Task["status"];
+  date: Task["date"];
 }
 
-export function Card({ title, description }: CardProps) {
+export function Card({ title, description, date, status }: CardProps) {
   return (
     <article className="flex flex-col bg-white rounded-lg p-3 w-full border border-gray-300 gap-2">
       <header className="flex justify-between items-center">
         <div className="flex bg-purple-100 px-2 py-1 rounded-lg items-center gap-2">
           <div className="size-2 rounded-full bg-purple-400"></div>
-          <p className="text-xs text-purple-900 font-medium">Not started</p>
+          <p className="text-xs text-purple-900 font-medium">
+            {TASK_STATUS[status]}
+          </p>
         </div>
         <aside>
           <button
@@ -43,7 +49,7 @@ export function Card({ title, description }: CardProps) {
         <div className="flex justify-between items-centers text-gray-500">
           <div className="flex gap-1 items-center">
             <CalendarIcon />
-            <p className="text-xs font-light">25 Marzo 2025</p>
+            <p className="text-xs font-light">{intl.format(date)}</p>
           </div>
           <PriorityChip label="Low" />
         </div>

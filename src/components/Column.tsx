@@ -5,9 +5,11 @@ import { AddIcon } from "./Icons";
 interface ColumnProps {
   title: string;
   tasks: Task[];
+  handleOpenCreateTask: () => void;
 }
 
-export function Column({ title, tasks }: ColumnProps) {
+export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
+  const haveTasks = tasks.length > 0;
   return (
     <article className="bg-[#F6F8FA] min-w-86 w-86 h-full rounded-lg overflow-y-hidden border border-gray-200">
       <header className="flex items-center justify-between p-3">
@@ -23,6 +25,7 @@ export function Column({ title, tasks }: ColumnProps) {
             aria-label="Add task"
             type="button"
             className="flex items-center font-bold text-gray-500 cursor-pointer"
+            onClick={handleOpenCreateTask}
           >
             <AddIcon />
           </button>
@@ -36,14 +39,17 @@ export function Column({ title, tasks }: ColumnProps) {
         </aside>
       </header>
       <section className="h-full w-full overflow-y-hidden ">
-        <div className="h-full w-full flex flex-col gap-3 p-3 pb-15 overflow-y-scroll">
-          {tasks.map((task) => (
-            <Card
-              key={task.id}
-              title={task.title}
-              description={task.description}
-            />
-          ))}
+        <div className="h-full w-full flex flex-col gap-3 p-3 pb-15 overflow-y-auto">
+          {haveTasks &&
+            tasks.map((task) => (
+              <Card
+                key={task.id}
+                title={task.title}
+                description={task.description}
+                date={task.date}
+                status={task.status}
+              />
+            ))}
         </div>
       </section>
     </article>
