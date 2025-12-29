@@ -36,14 +36,17 @@ export function Board() {
       </Modal>
 
       <section className="w-full h-full p-3 flex gap-3 overflow-x-auto overflow-y-hidden">
-        {cols.map((col) => (
-          <Column
-            key={col.id}
-            title={col.title}
-            tasks={col.tasks}
-            handleOpenCreateTask={() => handleOpenCreateTask(col.id)}
-          />
-        ))}
+        {cols.map((col) => {
+          return (
+            <Column
+              key={col.id}
+              title={col.title}
+              tasks={col.tasks}
+              handleOpenCreateTask={() => handleOpenCreateTask(col.id)}
+              color={col.color}
+            />
+          );
+        })}
         <ColumnWrapper>
           <AddColumn handleOpenCreateColumn={handleOpenCreateColumn} />
         </ColumnWrapper>

@@ -1,4 +1,4 @@
-import type { Task } from "../types/task";
+import type { Color, Task } from "../types/task";
 import { Card } from "./Card";
 import { ColumnWrapper } from "./ColumnWrapper";
 import { AddIcon } from "./Icons";
@@ -7,17 +7,27 @@ interface ColumnProps {
   title: string;
   tasks: Task[];
   handleOpenCreateTask: () => void;
+  color: Color;
 }
 
-export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
+export function Column({
+  title,
+  tasks,
+  handleOpenCreateTask,
+  color,
+}: ColumnProps) {
   const haveTasks = tasks.length > 0;
   return (
-    <ColumnWrapper>
+    <ColumnWrapper color={color.backgroundColor}>
       <header className="flex items-center justify-between p-3">
         <div className="flex items-center gap-2">
-          <div className="size-2 bg-amber-300 rounded-full"></div>
-          <h2 className="text-gray-800 text-nowrap font-medium">{title}</h2>
-          <p className="px-2 py-1 bg-blue-700 text-white rounded-full text-xs">
+          <div className={`size-2 ${color.circleColor} rounded-full`}></div>
+          <h2 className={`${color.textColor} text-nowrap font-semibold`}>
+            {title}
+          </h2>
+          <p
+            className={`px-2 py-1 ${color.circleColor} text-white rounded-full text-xs`}
+          >
             {tasks.length}
           </p>
         </div>

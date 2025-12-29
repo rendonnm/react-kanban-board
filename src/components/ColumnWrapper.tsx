@@ -1,15 +1,13 @@
 interface ColumnWrapperProps {
   children: React.ReactNode;
+  color?: string;
 }
 
-export function ColumnWrapper({ children }: ColumnWrapperProps) {
+export function ColumnWrapper({ children, color = "" }: ColumnWrapperProps) {
   return (
     <article
-      className="
-      flex flex-col
-      h-fit
-      bg-[#f6f8fa24] backdrop-blur-sm backdrop-brightness-115 min-w-86 w-86 
-     max-h-full rounded-lg overflow-y-hidden shadow-md border border-transparent hover:border-white/50"
+      className={`${color} flex flex-col h-fit backdrop-blur-xs backdrop-brightness-115 min-w-86 w-86 
+     max-h-full rounded-lg overflow-y-hidden shadow-md border border-transparent hover:border-white/50`}
     >
       {children}
     </article>

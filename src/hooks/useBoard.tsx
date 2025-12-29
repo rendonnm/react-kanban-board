@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Task, Col, Id } from "../types/task";
-import { columnsInitialState } from "../constants/columns";
+import { columnColors, columnsInitialState } from "../constants/columns";
 
 export function useBoard() {
   const [cols, setCols] = useState<Col[]>(columnsInitialState);
@@ -15,6 +15,7 @@ export function useBoard() {
       newArray.push({
         id: crypto.randomUUID(),
         title: colName,
+        color: columnColors[newArray.length % columnColors.length],
         tasks: [],
       });
       return newArray;

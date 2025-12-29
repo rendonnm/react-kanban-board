@@ -18,6 +18,13 @@ interface Col {
   id: Id;
   title: string;
   tasks: Task[];
+  color: Color;
 }
 
 export type TaskStatus = keyof typeof TASK_STATUS;
+
+export interface Color {
+  textColor: string;
+  backgroundColor: string;
+  circleColor: string;
+}
