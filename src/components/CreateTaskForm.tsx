@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Task, Id, TaskStatus } from "../types/task";
 import { TASK_STATUS } from "../constants/tasks";
+import { getActualDate } from "../helpers/dates";
 
 interface CreateColumnFormProps {
   handleAddTask: (task: Task) => void;
@@ -14,7 +15,7 @@ export function CreateTaskForm({
 }: CreateColumnFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState(() => getActualDate());
   const [status, setStatus] = useState<TaskStatus>("new");
 
   function handleTitle(newTitle: string) {
@@ -26,8 +27,7 @@ export function CreateTaskForm({
   }
 
   function handleDate(newDate: string) {
-    const formatDate = new Date(newDate);
-    setDate(formatDate);
+    setDate(newDate);
   }
 
   function handleStatus(newStatus: TaskStatus) {
@@ -47,13 +47,13 @@ export function CreateTaskForm({
       subTasks: [],
       comments: [],
     });
-    handleOpenModal();
+    closeModal();
   }
 
   function closeModal() {
     handleTitle("");
     handleDescription("");
-    handleDate("");
+    handleDate(getActualDate());
     handleStatus("new");
     handleOpenModal();
   }
@@ -103,6 +103,7 @@ export function CreateTaskForm({
           name="task-date"
           id="task-date"
           type="date"
+          value={date}
           onChange={(e) => handleDate(e.target.value)}
         />
       </div>

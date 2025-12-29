@@ -8,7 +8,7 @@ export interface Task {
   description: string;
   status: TaskStatus;
   asignees: string[];
-  date: Date;
+  date: string;
   comments: string[];
   links: string[];
   subTasks: Task[];

@@ -3,7 +3,13 @@ import { RestartIcon, TrashIcon } from "./Icons";
 
 export function Header() {
   return (
-    <header className="px-6 py-3 border-b border-gray-300 flex justify-between">
+    <header
+      className="px-6 py-3 flex justify-between
+    bg-[#00000035]
+    backdrop-blur-sm
+    text-white
+    "
+    >
       <h1 className="text-2xl font-semibold">Tasks 📚</h1>
       <aside className="flex gap-2">
         <HeaderButton icon={<TrashIcon />} label="Clear board" />

@@ -18,7 +18,7 @@ export function CreateColumnForm({
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     handleAddCol(columnName);
-    handleOpenModal();
+    closeModal();
   }
 
   function closeModal() {

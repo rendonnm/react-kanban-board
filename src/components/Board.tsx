@@ -1,9 +1,10 @@
 import { Column } from "./Column";
-import { AddColumnIcon } from "./Icons";
 import { Modal } from "./Modal";
 import { CreateColumnForm } from "./CreateColumnForm";
 import { CreateTaskForm } from "./CreateTaskForm";
 import { useBoard } from "../hooks/useBoard";
+import { AddColumn } from "./AddColumn";
+import { ColumnWrapper } from "./ColumnWrapper";
 
 export function Board() {
   const {
@@ -34,7 +35,7 @@ export function Board() {
         />
       </Modal>
 
-      <section className="w-full h-full p-6 flex gap-6 overflow-x-auto overflow-y-hidden">
+      <section className="w-full h-full p-3 flex gap-3 overflow-x-auto overflow-y-hidden">
         {cols.map((col) => (
           <Column
             key={col.id}
@@ -43,15 +44,9 @@ export function Board() {
             handleOpenCreateTask={() => handleOpenCreateTask(col.id)}
           />
         ))}
-        <article className="h-full text-gray-500">
-          <button
-            className="flex gap-1 cursor-pointer"
-            onClick={handleOpenCreateColumn}
-          >
-            <AddColumnIcon />
-            <p>Add column</p>
-          </button>
-        </article>
+        <ColumnWrapper>
+          <AddColumn handleOpenCreateColumn={handleOpenCreateColumn} />
+        </ColumnWrapper>
       </section>
     </>
   );

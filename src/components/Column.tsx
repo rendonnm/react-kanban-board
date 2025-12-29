@@ -1,5 +1,6 @@
 import type { Task } from "../types/task";
 import { Card } from "./Card";
+import { ColumnWrapper } from "./ColumnWrapper";
 import { AddIcon } from "./Icons";
 
 interface ColumnProps {
@@ -11,11 +12,11 @@ interface ColumnProps {
 export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
   const haveTasks = tasks.length > 0;
   return (
-    <article className="bg-[#F6F8FA] min-w-86 w-86 h-full rounded-lg overflow-y-hidden border border-gray-200">
+    <ColumnWrapper>
       <header className="flex items-center justify-between p-3">
         <div className="flex items-center gap-2">
           <div className="size-2 bg-amber-300 rounded-full"></div>
-          <h2 className="text-gray-800 text-nowrap">{title}</h2>
+          <h2 className="text-gray-800 text-nowrap font-medium">{title}</h2>
           <p className="px-2 py-1 bg-blue-700 text-white rounded-full text-xs">
             {tasks.length}
           </p>
@@ -25,21 +26,13 @@ export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
             aria-label="Add task"
             type="button"
             className="flex items-center font-bold text-gray-500 cursor-pointer"
-            onClick={handleOpenCreateTask}
-          >
-            <AddIcon />
-          </button>
-          <button
-            aria-label="Add task"
-            type="button"
-            className="flex items-center font-bold text-gray-500 cursor-pointer"
           >
             ⋯
           </button>
         </aside>
       </header>
-      <section className="h-full w-full overflow-y-hidden ">
-        <div className="h-full w-full flex flex-col gap-3 p-3 pb-15 overflow-y-auto">
+      <section className="h-full w-full overflow-y-auto">
+        <div className="h-full w-full flex flex-col gap-3 px-3">
           {haveTasks &&
             tasks.map((task) => (
               <Card
@@ -52,6 +45,19 @@ export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
             ))}
         </div>
       </section>
-    </article>
+      <footer className="flex items-center w-full px-3 py-2">
+        <button
+          aria-label="Add task"
+          type="button"
+          className=" text-sm
+          flex items-center font-medium text-white cursor-pointer px-3 py-1 gap-1
+          hover:bg-white/10 rounded-lg"
+          onClick={handleOpenCreateTask}
+        >
+          <AddIcon />
+          Add card
+        </button>
+      </footer>
+    </ColumnWrapper>
   );
 }
