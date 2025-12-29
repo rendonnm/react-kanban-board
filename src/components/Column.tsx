@@ -32,18 +32,19 @@ export function Column({ title, tasks, handleOpenCreateTask }: ColumnProps) {
         </aside>
       </header>
       <section className="h-full w-full overflow-y-auto">
-        <div className="h-full w-full flex flex-col gap-3 px-3">
+        <ul className="h-full w-full flex flex-col gap-3 px-3">
           {haveTasks &&
             tasks.map((task) => (
-              <Card
-                key={task.id}
-                title={task.title}
-                description={task.description}
-                date={task.date}
-                status={task.status}
-              />
+              <li key={task.id}>
+                <Card
+                  title={task.title}
+                  description={task.description}
+                  date={task.date}
+                  status={task.status}
+                />
+              </li>
             ))}
-        </div>
+        </ul>
       </section>
       <footer className="flex items-center w-full px-3 py-2">
         <button
