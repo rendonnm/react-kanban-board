@@ -2,6 +2,12 @@ import { useState } from "react";
 import type { Task, Col, Id } from "../types/task";
 import { columnColors, columnsInitialState } from "../constants/columns";
 
+export interface HandleDropProps {
+  fromColId: Col["id"];
+  toColId: Col["id"];
+  data: Task;
+}
+
 export function useBoard() {
   const [cols, setCols] = useState<Col[]>(columnsInitialState);
   const [isOpenCreateColumn, setIsOpenCreateColumn] = useState(false);
@@ -25,7 +31,7 @@ export function useBoard() {
   function handleAddTask(task: Task) {
     setCols((prev) => {
       const newArray = structuredClone(prev);
-      const col = newArray.find((task) => task.id === actualColum);
+      const col = newArray.find((column) => column.id === actualColum);
       if (col) {
         const index = newArray.indexOf(col);
         newArray[index].tasks.push(task);
@@ -47,6 +53,39 @@ export function useBoard() {
     }
   }
 
+  function handleDrop({ fromColId, toColId, data }: HandleDropProps) {
+    const task = {
+      id: crypto.randomUUID(),
+      title: data.title,
+      description: data.description,
+      status: data.status,
+      asignees: [],
+      date: data.date,
+      links: [],
+      subTasks: [],
+      comments: [],
+    };
+
+    setCols((prev) => {
+      const newArray = structuredClone(prev);
+      const toCol = newArray.find((column) => column.id === toColId);
+      const fromCol = newArray.find((column) => column.id === fromColId);
+
+      if (fromCol) {
+        const index = newArray.indexOf(fromCol);
+        newArray[index].tasks = newArray[index].tasks.filter(
+          (task) => task.id !== data.id
+        );
+      }
+
+      if (toCol) {
+        const index = newArray.indexOf(toCol);
+        newArray[index].tasks.push(task);
+      }
+      return newArray;
+    });
+  }
+
   return {
     actualColum,
     cols,
@@ -56,5 +95,6 @@ export function useBoard() {
     handleAddTask,
     handleOpenCreateColumn,
     handleOpenCreateTask,
+    handleDrop,
   };
 }

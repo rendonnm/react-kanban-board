@@ -1,19 +1,58 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { CalendarIcon, CommentIcon, TaskIcon, LinkIcon } from "./Icons";
-import type { Task } from "../types/task";
+import type { Col, Task } from "../types/task";
 import { intl } from "../format/intl";
 import { TaskStatusBadges } from "./TaskStatusBadge";
 
 interface CardProps {
+  columnId: Col["id"];
+  taskId: Task["id"];
   title: Task["title"];
   description: Task["description"];
   status: Task["status"];
   date: Task["date"];
 }
 
-export function Card({ title, description, date, status }: CardProps) {
+export function Card({
+  taskId,
+  title,
+  description,
+  date,
+  status,
+  columnId,
+}: CardProps) {
+  const [isDragging, setIsDragging] = useState(false);
+  const data = {
+    id: taskId,
+    title,
+    description,
+    date,
+    status,
+  } as const;
+
+  function handleDragStart(
+    e: React.DragEvent<HTMLElement>,
+    payload: typeof data
+  ) {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("from-column-id", columnId);
+    e.dataTransfer.setData("card-info", JSON.stringify(payload));
+
+    // This gives the browser time to capture the drag preview before the element
+    // becomes invisible/hidden, preventing flicker or a missing preview.
+    requestAnimationFrame(() => setIsDragging(true));
+  }
   return (
-    <article className="flex flex-col bg-white rounded-lg p-3 w-full gap-2 shadow-sm cursor-pointer">
+    <article
+      className={`flex flex-col bg-white rounded-lg p-3 w-full gap-2 shadow-sm
+      cursor-grab active:cursor-grabbing select-none ${isDragging && "hidden"}`}
+      draggable
+      onDragStart={(e) => handleDragStart(e, data)}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDragEnd={() => setIsDragging(false)}
+    >
       <header className="flex justify-between items-center">
         <TaskStatusBadges status={status} />
         <aside>

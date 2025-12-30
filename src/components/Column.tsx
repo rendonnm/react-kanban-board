@@ -1,24 +1,25 @@
-import type { Color, Task } from "../types/task";
+import type { Col, Color, Task } from "../types/task";
 import { Card } from "./Card";
-import { ColumnWrapper } from "./ColumnWrapper";
 import { AddIcon } from "./Icons";
 
 interface ColumnProps {
+  id: Col["id"];
   title: string;
   tasks: Task[];
-  handleOpenCreateTask: () => void;
   color: Color;
+  handleOpenCreateTask: () => void;
 }
 
 export function Column({
+  id,
   title,
   tasks,
-  handleOpenCreateTask,
   color,
+  handleOpenCreateTask,
 }: ColumnProps) {
   const haveTasks = tasks.length > 0;
   return (
-    <ColumnWrapper color={color.backgroundColor}>
+    <>
       <header className="flex items-center justify-between p-3">
         <div className="flex items-center gap-2">
           <div className={`size-2 ${color.circleColor} rounded-full`}></div>
@@ -47,10 +48,12 @@ export function Column({
             tasks.map((task) => (
               <li key={task.id}>
                 <Card
+                  taskId={task.id}
                   title={task.title}
                   description={task.description}
                   date={task.date}
                   status={task.status}
+                  columnId={id}
                 />
               </li>
             ))}
@@ -60,7 +63,7 @@ export function Column({
         <button
           aria-label="Add task"
           type="button"
-          className=" text-sm
+          className="text-sm
           flex items-center font-medium text-white cursor-pointer px-3 py-1 gap-1
           hover:bg-white/10 rounded-lg"
           onClick={handleOpenCreateTask}
@@ -69,6 +72,6 @@ export function Column({
           Add card
         </button>
       </footer>
-    </ColumnWrapper>
+    </>
   );
 }

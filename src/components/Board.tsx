@@ -16,6 +16,7 @@ export function Board() {
     handleAddTask,
     handleOpenCreateColumn,
     handleOpenCreateTask,
+    handleDrop,
   } = useBoard();
 
   return (
@@ -38,16 +39,23 @@ export function Board() {
       <section className="w-full h-full p-3 flex gap-3 overflow-x-auto overflow-y-hidden">
         {cols.map((col) => {
           return (
-            <Column
+            <ColumnWrapper
               key={col.id}
-              title={col.title}
-              tasks={col.tasks}
-              handleOpenCreateTask={() => handleOpenCreateTask(col.id)}
-              color={col.color}
-            />
+              id={col.id}
+              color={col.color.backgroundColor}
+              handleDrop={handleDrop}
+            >
+              <Column
+                id={col.id}
+                title={col.title}
+                tasks={col.tasks}
+                color={col.color}
+                handleOpenCreateTask={() => handleOpenCreateTask(col.id)}
+              />
+            </ColumnWrapper>
           );
         })}
-        <ColumnWrapper>
+        <ColumnWrapper handleDrop={handleDrop}>
           <AddColumn handleOpenCreateColumn={handleOpenCreateColumn} />
         </ColumnWrapper>
       </section>
